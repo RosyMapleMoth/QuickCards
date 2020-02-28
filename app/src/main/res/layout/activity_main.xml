@@ -11,16 +11,17 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:gravity="center"
+        android:text="wow"
         android:textSize="40sp"
         tools:text="Question Text  Question Text ?" />
 
     <TextView
-        android:id="@+id/tvQuestion2"
+        android:id="@+id/tvAnswer"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_below="@+id/tvQuestion"
-        android:layout_marginTop="0dp"
         android:gravity="center"
+        android:text="Thats wrong"
         android:textSize="40sp"
+        android:visibility="invisible"
         tools:text="This is the awnser " />
 </RelativeLayout>
