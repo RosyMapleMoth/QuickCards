@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="Wrong">#b50b0e</color>
     <color name="Right">#28a83e</color>
+    <color name="MissingColors">#D3D3D3</color>
 </resources>

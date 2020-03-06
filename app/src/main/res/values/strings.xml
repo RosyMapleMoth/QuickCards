@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MAD QuickCards</string>
+    <string name="emptyState">Sorry you don\'t appear to have any flashcards saved</string>
 </resources>
