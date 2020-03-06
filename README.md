@@ -10,7 +10,7 @@
 - [X] User can edit a card and see the edit saved when they browse through their deck of cards
 - [X] User can create flashcards with multiple answers and be able to browse through cards with multiple choice answers shown
 
-<img src="https://i.imgur.com/I93HaxF.mp4" width="200" height="400" />  
+<img src="https://i.imgur.com/I93HaxF.gif" width="200" height="400" />  
 
 # Lab 2 : Flashcard App (QuickCards)
 
