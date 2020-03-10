@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -27,6 +30,9 @@ public class AddCardActivity extends AppCompatActivity {
         ((EditText)findViewById(R.id.etWrongAnswerTwo)).setText(getIntent().getStringExtra("wrong answer two"));
         etQuestion.setText(getIntent().getStringExtra("question"));
 
+        etQuestion.setImeActionLabel("next", KeyEvent.KEYCODE_ENTER);
+        etAnswer.setImeActionLabel("next", KeyEvent.KEYCODE_ENTER);
+
 
 
 
@@ -36,6 +42,7 @@ public class AddCardActivity extends AppCompatActivity {
             public void onClick(View view)
             {
                 finish();
+                overridePendingTransition(R.anim.left_in, R.anim.right_out);
             }
         });
 
@@ -59,9 +66,27 @@ public class AddCardActivity extends AppCompatActivity {
                     data.putExtra("answerWrongTwo", ((EditText)findViewById(R.id.etWrongAnswerTwo)).getText().toString()); // puts another string into the Intent, with the key as 'string2
                     setResult(RESULT_OK, data);
                     finish();
+                    overridePendingTransition(R.anim.left_in, R.anim.right_out);
                 }
             }
         });
 
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+
+        // This refers to the Up navigation button in the action bar
+        if (id == android.R.id.home) {
+            finish();
+            overridePendingTransition(R.anim.left_in, R.anim.right_out);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

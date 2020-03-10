@@ -5,18 +5,26 @@
     android:id="@+id/rellay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/colorPrimary">
+
+
 
     <TextView
         android:id="@+id/tvQuestion"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@drawable/big_question_background"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/big_question_backround"
         android:ems="20"
         android:gravity="center"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:text=""
+        android:textColor="@android:color/background_dark"
         android:textSize="40sp"
         android:visibility="visible"
         tools:text="Question Text  Question Text ?" />
@@ -25,11 +33,16 @@
         android:id="@+id/tvAnswer"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@drawable/big_question_backround"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/big_question_background"
         android:gravity="center"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
         android:text=""
+        android:textColor="@android:color/background_dark"
         android:textSize="40sp"
         android:visibility="invisible"
         tools:text="This is the awnser " />
@@ -37,7 +50,7 @@
     <TextView
         android:id="@+id/tvAOne"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:layout_above="@+id/tvAOne2"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
@@ -47,13 +60,17 @@
         android:background="@drawable/small_answer_neutral"
         android:gravity="center"
         android:text=""
+        android:textColor="@android:color/black"
         android:visibility="visible"
+        app:autoSizeMaxTextSize="28sp"
+        app:autoSizeMinTextSize="14sp"
+        app:autoSizeTextType="uniform"
         tools:text="Answer one" />
 
     <TextView
         android:id="@+id/tvAOne2"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:layout_above="@+id/tvAOne3"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
@@ -63,23 +80,32 @@
         android:background="@drawable/small_answer_neutral"
         android:gravity="center"
         android:text=""
+        android:textColor="@android:color/black"
         android:visibility="visible"
+        app:autoSizeMaxTextSize="28sp"
+        app:autoSizeMinTextSize="14sp"
+        app:autoSizeTextType="uniform"
         tools:text="Answer two" />
 
     <TextView
         android:id="@+id/tvAOne3"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
+        android:layout_height="60sp"
         android:layout_above="@+id/toggle_choices_visibility"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="30dp"
         android:background="@drawable/small_answer_neutral"
+        android:fontFamily="sans-serif"
         android:gravity="center"
         android:text=""
+        android:textColor="@android:color/black"
         android:visibility="visible"
+        app:autoSizeMaxTextSize="28sp"
+        app:autoSizeMinTextSize="14sp"
+        app:autoSizeTextType="uniform"
         tools:text="Answer three" />
 
     <ImageView
@@ -89,6 +115,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="5dp"
+        android:tint="#757575"
         android:visibility="visible"
         app:srcCompat="@drawable/ic_iconmonstr_edit_6" />
 
@@ -116,6 +143,7 @@
         android:layout_height="40dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
+        android:tint="#757575"
         android:visibility="visible"
         app:srcCompat="@drawable/ic_iconmonstr_pencil_10" />
 
@@ -125,6 +153,7 @@
         android:layout_height="40dp"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
+        android:tint="#757575"
         android:visibility="visible"
         app:srcCompat="@drawable/ic_iconmonstr_eye_5" />
 
@@ -137,6 +166,7 @@
         android:layout_centerVertical="true"
         android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
+        android:tint="#757575"
         android:visibility="visible"
         app:srcCompat="@drawable/ic_iconmonstr_arrow_28" />
 
@@ -146,9 +176,10 @@
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_below="@+id/tvQuestion"
-        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
         android:layout_marginTop="20dp"
         android:foregroundGravity="center_vertical|center|center_horizontal"
+        android:tint="#757575"
         android:visibility="visible"
         app:srcCompat="@drawable/ic_iconmonstr_trash_can_2" />
 

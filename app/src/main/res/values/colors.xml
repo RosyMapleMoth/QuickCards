@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
-    <color name="Wrong">#b50b0e</color>
-    <color name="Right">#28a83e</color>
+    <color name="colorPrimary">#A9BCD0</color>
+    <color name="colorPrimaryDark">#023C40</color>
+    <color name="colorAccent">#A9BCD0</color>
+    <color name="Wrong">#FF6363</color>
+    <!--<color name="Right">#78FFD6</color>-->
+    <color name="TestBackRound">#5c0099</color>
+    <color name="Right">#6ae6c0</color>
+
+    <color name="Nutrel">#4090A3</color>
+    <color name="NutrelTest">#4090A3</color>
     <color name="MissingColors">#D3D3D3</color>
+
 </resources>
