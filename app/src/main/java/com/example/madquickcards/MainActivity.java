@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         final TextView tvQuestion = findViewById(R.id.tvQuestion);
         final TextView tvAnswer = findViewById(R.id.tvAnswer);
         final TextView tvAnswerOne = findViewById(R.id.tvAOne); // correct
