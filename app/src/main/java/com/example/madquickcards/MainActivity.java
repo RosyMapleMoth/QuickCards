@@ -2,6 +2,7 @@ package com.example.madquickcards;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.animation.Animator;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
@@ -12,6 +13,9 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewAnimationUtils;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -27,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int ADD_CARD_REQUEST_CODE = 100;
     private static final int EMPTY_ADD_CARD_REQUEST_CODE = 110;
 
+    private boolean animating = false;
     private boolean showing = true;
     private FlashcardDatabase flashcardDatabase;
     private List<Flashcard> allFlashcards;
@@ -57,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
 
         flashcardDatabase = new FlashcardDatabase(getApplicationContext());
         allFlashcards = flashcardDatabase.getAllCards();
-
 
 
         final GradientDrawable backgroundOne = (GradientDrawable) ((TextView) findViewById(R.id.tvAOne)).getBackground();
@@ -128,11 +132,60 @@ public class MainActivity extends AppCompatActivity {
                     }
                     while (random_num == currentCardDisplayedIndex);
 
+
+
+                    final Animation leftOutAnim = AnimationUtils.loadAnimation(v.getContext(), R.anim.left_out);
+                    final Animation rightInAnim = AnimationUtils.loadAnimation(v.getContext(), R.anim.right_in);
                     currentCardDisplayedIndex = random_num;
-                    LoadCard(allFlashcards.get(currentCardDisplayedIndex).getQuestion(),
-                            allFlashcards.get(currentCardDisplayedIndex).getAnswer(),
-                            allFlashcards.get(currentCardDisplayedIndex).getWrongAnswer1(),
-                            allFlashcards.get(currentCardDisplayedIndex).getWrongAnswer2());
+
+                    if (tvQuestion.getVisibility() == View.VISIBLE) {
+
+                        leftOutAnim.setAnimationListener(new Animation.AnimationListener() {
+                            @Override
+                            public void onAnimationStart(Animation animation) {
+                                // this method is called when the animation first starts
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+                                findViewById(R.id.tvQuestion).startAnimation(rightInAnim);
+                                LoadCard(allFlashcards.get(currentCardDisplayedIndex).getQuestion(),
+                                        allFlashcards.get(currentCardDisplayedIndex).getAnswer(),
+                                        allFlashcards.get(currentCardDisplayedIndex).getWrongAnswer1(),
+                                        allFlashcards.get(currentCardDisplayedIndex).getWrongAnswer2());
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animation animation) {
+                                // we don't need to worry about this method
+                            }
+                        });
+                        findViewById(R.id.tvQuestion).startAnimation(leftOutAnim);
+                    }
+                    else
+                    {
+                        leftOutAnim.setAnimationListener(new Animation.AnimationListener() {
+                            @Override
+                            public void onAnimationStart(Animation animation) {
+                                // this method is called when the animation first starts
+                            }
+
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+                                findViewById(R.id.tvQuestion).startAnimation(rightInAnim);
+                                LoadCard(allFlashcards.get(currentCardDisplayedIndex).getQuestion(),
+                                        allFlashcards.get(currentCardDisplayedIndex).getAnswer(),
+                                        allFlashcards.get(currentCardDisplayedIndex).getWrongAnswer1(),
+                                        allFlashcards.get(currentCardDisplayedIndex).getWrongAnswer2());
+                            }
+
+                            @Override
+                            public void onAnimationRepeat(Animation animation) {
+                                // we don't need to worry about this method
+                            }
+                        });
+                        findViewById(R.id.tvAnswer).startAnimation(leftOutAnim);
+                    }
                 }
             }
         });
@@ -173,8 +226,47 @@ public class MainActivity extends AppCompatActivity {
         tvQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tvQuestion.setVisibility(View.INVISIBLE);
-                tvAnswer.setVisibility(View.VISIBLE);
+                if (!animating) {
+                    animating = true;
+                    int cx = tvAnswer.getWidth() / 2;
+                    int cy = tvAnswer.getHeight() / 2;
+                    tvAnswer.bringToFront();
+
+                    float finalRadius = (float) Math.hypot(cx, cy);
+
+                    Animator anim = ViewAnimationUtils.createCircularReveal(tvAnswer, cx, cy, 0f, finalRadius);
+
+
+                    anim.addListener(new Animator.AnimatorListener() {
+                        @Override
+                        public void onAnimationStart(Animator animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            tvQuestion.setVisibility(View.INVISIBLE);
+                            animating = false;
+
+                        }
+
+                        @Override
+                        public void onAnimationCancel(Animator animation) {
+                            animating = false;
+
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animator animation) {
+
+                        }
+                    });
+
+                    tvAnswer.setVisibility(View.VISIBLE);
+
+                    anim.setDuration(1500);
+                    anim.start();
+                }
             }
         });
 
@@ -183,8 +275,49 @@ public class MainActivity extends AppCompatActivity {
         tvAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tvQuestion.setVisibility(View.VISIBLE);
-                tvAnswer.setVisibility(View.INVISIBLE);
+
+                if (!animating) {
+
+                    animating = true;
+                    int cx = tvAnswer.getWidth() / 2;
+                    int cy = tvAnswer.getHeight() / 2;
+                    tvQuestion.setVisibility(View.VISIBLE);
+                    tvQuestion.bringToFront();
+
+                    float finalRadius = (float) Math.hypot(cx, cy);
+
+                    // create the animator for this view (the start radius is zero)
+                    Animator anim = ViewAnimationUtils.createCircularReveal(tvQuestion, cx, cy, 0f, finalRadius);
+
+                    anim.addListener(new Animator.AnimatorListener() {
+                        @Override
+                        public void onAnimationStart(Animator animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            tvAnswer.setVisibility(View.INVISIBLE);
+                            animating = false;
+                        }
+
+                        @Override
+                        public void onAnimationCancel(Animator animation) {
+                            animating = false;
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animator animation) {
+
+                        }
+                    });
+
+                    tvQuestion.setVisibility(View.VISIBLE);
+
+
+                    anim.setDuration(1500);
+                    anim.start();
+                }
             }
         });
 
