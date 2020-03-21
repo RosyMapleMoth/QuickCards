@@ -9,14 +9,14 @@
     android:background="@color/colorPrimary">
 
 
-
     <TextView
         android:id="@+id/tvQuestion"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_alignParentTop="true"
+        android:layout_alignTop="@id/tvTimer"
+        android:layout_alignParentTop="false"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="25dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/big_question_backround"
         android:ems="20"
@@ -33,9 +33,9 @@
         android:id="@+id/tvAnswer"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_alignParentTop="true"
+        android:layout_alignTop="@id/tvTimer"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="25dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/big_question_background"
         android:gravity="center"
@@ -211,4 +211,14 @@
         android:textSize="30sp"
         android:visibility="invisible"
         tools:text="@string/emptyState" />
+
+    <TextView
+        android:id="@+id/tvTimer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:foregroundGravity="center_horizontal"
+        android:textSize="18sp"
+        tools:text="Timer" />
 </RelativeLayout>

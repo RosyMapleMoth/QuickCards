@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.snackbar.Snackbar;
+import com.plattysoft.leonids.ParticleSystem;
 
 import java.util.List;
 import java.util.Random;
@@ -39,8 +40,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean empty;
     private CountDownTimer returnToNormal;
     private ValueAnimator awnOne, awnTwo, awnThree;
-
-
+    private CountDownTimer countDownTimer;
 
 
 
@@ -63,6 +63,15 @@ public class MainActivity extends AppCompatActivity {
         flashcardDatabase = new FlashcardDatabase(getApplicationContext());
         allFlashcards = flashcardDatabase.getAllCards();
 
+
+        countDownTimer = new CountDownTimer(16000, 1000) {
+            public void onTick(long millisUntilFinished) {
+                ((TextView) findViewById(R.id.tvTimer)).setText("" + millisUntilFinished / 1000);
+            }
+
+            public void onFinish() {
+            }
+        };
 
         final GradientDrawable backgroundOne = (GradientDrawable) ((TextView) findViewById(R.id.tvAOne)).getBackground();
         awnOne = ValueAnimator.ofObject(new ArgbEvaluator(),
@@ -126,28 +135,28 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // advance our pointer index so we can show the next card
                 if (allFlashcards.size() - 1 > 0) {
-                    int random_num;
-                    do {
-                        random_num = getRandomNumber(0, allFlashcards.size() - 1);
-                    }
-                    while (random_num == currentCardDisplayedIndex);
+
 
 
 
                     final Animation leftOutAnim = AnimationUtils.loadAnimation(v.getContext(), R.anim.left_out);
                     final Animation rightInAnim = AnimationUtils.loadAnimation(v.getContext(), R.anim.right_in);
-                    currentCardDisplayedIndex = random_num;
 
                     if (tvQuestion.getVisibility() == View.VISIBLE) {
 
                         leftOutAnim.setAnimationListener(new Animation.AnimationListener() {
                             @Override
                             public void onAnimationStart(Animation animation) {
-                                // this method is called when the animation first starts
                             }
 
                             @Override
                             public void onAnimationEnd(Animation animation) {
+                                int random_num;
+                                do {
+                                    random_num = getRandomNumber(0, allFlashcards.size() - 1);
+                                }
+                                while (random_num == currentCardDisplayedIndex);
+                                currentCardDisplayedIndex = random_num;
                                 findViewById(R.id.tvQuestion).startAnimation(rightInAnim);
                                 LoadCard(allFlashcards.get(currentCardDisplayedIndex).getQuestion(),
                                         allFlashcards.get(currentCardDisplayedIndex).getAnswer(),
@@ -192,6 +201,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
         findViewById(R.id.ivTrash).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -222,10 +232,16 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+        findViewById(R.id.tvQuestion).setCameraDistance(25000);
+        findViewById(R.id.tvAnswer).setCameraDistance(25000);
+
 
         tvQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                /*
                 if (!animating) {
                     animating = true;
                     int cx = tvAnswer.getWidth() / 2;
@@ -266,17 +282,36 @@ public class MainActivity extends AppCompatActivity {
 
                     anim.setDuration(1500);
                     anim.start();
-                }
+                }*/
+
+
+                tvQuestion.animate()
+                        .rotationY(90)
+                        .setDuration(200)
+                        .withEndAction(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        tvQuestion.setVisibility(View.INVISIBLE);
+                                        tvAnswer.setVisibility(View.VISIBLE);
+                                        // second quarter turn
+                                        tvAnswer.setRotationY(-90);
+                                        tvAnswer.animate()
+                                                .rotationY(0)
+                                                .setDuration(200)
+                                                .start();
+                                    }
+                                }
+                        ).start();
             }
         });
-
 
 
         tvAnswer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if (!animating) {
+                /*if (!animating) {
 
                     animating = true;
                     int cx = tvAnswer.getWidth() / 2;
@@ -317,9 +352,29 @@ public class MainActivity extends AppCompatActivity {
 
                     anim.setDuration(1500);
                     anim.start();
-                }
+                }*/
+
+                tvAnswer.animate()
+                        .rotationY(90)
+                        .setDuration(200)
+                        .withEndAction(
+                                new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        tvAnswer.setVisibility(View.INVISIBLE);
+                                        findViewById(R.id.tvQuestion).setVisibility(View.VISIBLE);
+                                        // second quarter turn
+                                        findViewById(R.id.tvQuestion).setRotationY(-90);
+                                        findViewById(R.id.tvQuestion).animate()
+                                                .rotationY(0)
+                                                .setDuration(200)
+                                                .start();
+                                    }
+                                }
+                        ).start();
             }
         });
+
 
 
 
@@ -330,6 +385,10 @@ public class MainActivity extends AppCompatActivity {
                 if (returnToNormal == null && (awnOne == null || !awnOne.isRunning()))
                 {
                     awnOne.start();
+                    new ParticleSystem(MainActivity.this, 100, R.drawable.confetti, 3000)
+                            .setSpeedRange(0.2f, 0.5f)
+                            .oneShot(tvAnswerOne, 100);
+
                     returnToNormal = new CountDownTimer(3000, 1000) {
                         public void onTick(long millisUntilFinished) {
                         }
@@ -532,6 +591,15 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    private void startTimer()
+    {
+        countDownTimer.cancel();
+        countDownTimer.start();
+    }
+
+
+
+
 
     private void LoadCard(String Question, String Answer, String WrongAnswerOne, String WrongAnswerTwo)
     {
@@ -566,6 +634,8 @@ public class MainActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.tvAOne)).setText(Answer);
         ((TextView)findViewById(R.id.tvAOne2)).setText(WrongAnswerOne);
         ((TextView)findViewById(R.id.tvAOne3)).setText(WrongAnswerTwo);
+
+        startTimer();
     }
 
 
