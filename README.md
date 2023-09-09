@@ -1,4 +1,6 @@
 # QuickCards
+This is a small flashcard application made as a part of CodePaths Mobile App Development class
+
 
 ### App Description
 a small flashcard application that helps you study!
